@@ -11,13 +11,14 @@
  */
 int print_number(int num)
 {
-	int i = 10, j = 0, k, l, sum = 0;
+	int i = 10, j = 0, k, l, sum = 0, sign = 0;
 	int *num2, *dec;
 
 	if (num < 0)
 	{
 		num = -num;
 		print_char('-');
+		sign = 1;
 	}
 	while (num / i != 0)
 	{
@@ -48,5 +49,5 @@ int print_number(int num)
 	}
 	free(num2);
 	free(dec);
-	return (j + 1);
+	return (j + 1 + sign);
 }
