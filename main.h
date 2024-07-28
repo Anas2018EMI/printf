@@ -7,7 +7,8 @@
 int print_char(char c);
 int _printf(const char *format, ...);
 int _len(const char *str);
-void print_str(char *str);
+int print_str(char *str);
 int print_number(int num);
+int handle_format(char specifier, va_list args);
 #endif
 

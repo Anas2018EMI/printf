@@ -5,58 +5,39 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/* betty style doc for function  check_str goes there */
+/* betty style doc for function  handle_format goes there */
 /**
- * check_str - Entry point
- * @i: first arg
- * @sum: second arg
- * @a: third arg
- * @to: seventh arg
- * @format: First arg
+ * handle_format - Entry point
+ * @specifier: first arg
+ * @args: second arg
  *
  * Return: int
  */
-int check_str(int i, int sum, int a, va_list to, const char *format)
+int handle_format(char specifier, va_list args)
 {
-	char *str;
-	bool is = 0;
+	int count = 0;
 
-	for (i = 0; i < a; i++)
+	switch (specifier)
 	{
-		is = (*(format + i) == 'd' || *(format + i) == 'i');
-		if (i > 0 && *(format + i - 1) == '%' && *(format + i) == 'c')
-		{
-			print_char(va_arg(to, int));
-			sum++;
-		}
-		else if (i > 0 && *(format + i - 1) == '%' && *(format + i) == 's')
-		{
-			str = va_arg(to, char *);
-			print_str(str);
-			sum += _len(str);
-		}
-		else if (i > 0 && *(format + i - 1) == '%' && is)
-		{
-			sum += print_number(va_arg(to, int));
-		}
-		else if (i > 0 && *(format + i - 1) == '%' && *(format + i) == '%')
-		{
-			print_char(*(format + i));
-			sum++;
-		}
-		else if (*(format + i) != '%')
-		{
-			print_char(*(format + i));
-			sum++;
-		}
-		else
-		{
-			continue;
-		}
+		case 'c':
+			count += print_char(va_arg(args, int));
+			break;
+		case 's':
+			count += print_str(va_arg(args, char *));
+			break;
+		case '%':
+			count += print_char('%');
+			break;
+		case 'd':
+		case 'i':
+			count += print_number(va_arg(args, int));
+			break;
+		default:
+			count += print_char('%');
+			count += print_char(specifier);
 	}
-	return (sum);
+	return (count);
 }
-
 /* betty style doc for function  _printf goes there */
 /**
  * _printf - Entry point
@@ -64,18 +45,32 @@ int check_str(int i, int sum, int a, va_list to, const char *format)
  *
  * Return: int
  */
+
 int _printf(const char *format, ...)
 {
-	int i = 0, sum = 0, length;
-	va_list to;
+	int i = 0, sum = 0;
+	va_list args;
 
 	if (format == NULL)
+		return (-1);
+
+	va_start(args, format);
+
+	while (format[i])
 	{
-		return (0);
+		if (format[i] != '%')
+			sum += print_char(format[i]);
+		else
+		{
+			i++;
+			if (format[i] == '\0')
+				return (-1);
+			sum += handle_format(format[i], args);
+		}
+		i++;
 	}
-	length = _len(format);
-	va_start(to, format);
-	sum = check_str(i, sum, length, to, format);
-	va_end(to);
+
+	va_end(args);
 	return (sum);
 }
+
