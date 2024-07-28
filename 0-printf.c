@@ -18,7 +18,7 @@
  */
 int check_str(int i, int sum, int a, va_list to, const char *format)
 {
-	int num;
+	char *str;
 	bool is = 0;
 
 	for (i = 0; i < a; i++)
@@ -31,13 +31,13 @@ int check_str(int i, int sum, int a, va_list to, const char *format)
 		}
 		else if (i > 0 && *(format + i - 1) == '%' && *(format + i) == 's')
 		{
-			print_str(va_arg(to, char *));
-			sum += _len(va_arg(to, char *));
+			str = va_arg(to, char *);
+			print_str(str);
+			sum += _len(str);
 		}
 		else if (i > 0 && *(format + i - 1) == '%' && is)
 		{
-			num = va_arg(to, int);
-			sum += print_number(num);
+			sum += print_number(va_arg(to, int));
 		}
 		else if (i > 0 && *(format + i - 1) == '%' && *(format + i) == '%')
 		{
