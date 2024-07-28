@@ -8,6 +8,5 @@ int print_char(char c);
 int _printf(const char *format, ...);
 int print_str(char *str);
 int print_number(int num);
-int handle_format(char specifier, va_list args);
+int check_format(char specifier, va_list args);
 #endif
-

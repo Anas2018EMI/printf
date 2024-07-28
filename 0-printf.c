@@ -5,36 +5,38 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/* betty style doc for function  handle_format goes there */
+/* betty style doc for function  check_format goes there */
 /**
- * handle_format - Entry point
+ * check_format - Entry point
  * @specifier: first arg
  * @args: second arg
  *
  * Return: int
  */
-int handle_format(char specifier, va_list args)
+int check_format(char specifier, va_list args)
 {
 	int count = 0;
 
-	switch (specifier)
+	if (specifier == 'c')
 	{
-		case 'c':
-			count += print_char(va_arg(args, int));
-			break;
-		case 's':
-			count += print_str(va_arg(args, char *));
-			break;
-		case '%':
-			count += print_char('%');
-			break;
-		case 'd':
-		case 'i':
-			count += print_number(va_arg(args, int));
-			break;
-		default:
-			count += print_char('%');
-			count += print_char(specifier);
+		count += print_char(va_arg(args, int));
+	}
+	else if (specifier == 's')
+	{
+		count += print_str(va_arg(args, char *));
+	}
+	else if (specifier == '%')
+	{
+		count += print_char('%');
+	}
+	else if (specifier == 'd' || specifier == 'i')
+	{
+		count += print_number(va_arg(args, int));
+	}
+	else
+	{
+		count += print_char('%');
+		count += print_char(specifier);
 	}
 	return (count);
 }
@@ -52,25 +54,27 @@ int _printf(const char *format, ...)
 	va_list args;
 
 	if (format == NULL)
+	{
 		return (-1);
-
+	}
 	va_start(args, format);
-
 	while (format[i])
 	{
 		if (format[i] != '%')
+		{
 			sum += print_char(format[i]);
+		}
 		else
 		{
 			i++;
 			if (format[i] == '\0')
+			{
 				return (-1);
-			sum += handle_format(format[i], args);
+			}
+			sum += check_format(format[i], args);
 		}
 		i++;
 	}
-
 	va_end(args);
 	return (sum);
 }
-

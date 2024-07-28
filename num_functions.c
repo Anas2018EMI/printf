@@ -24,8 +24,9 @@ int print_number(int n)
 		num = n;
 
 	if (num / 10)
+	{
 		count += print_number(num / 10);
-
+	}
 	print_char((num % 10) + '0');
 	return (count + 1);
 }
