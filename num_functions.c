@@ -30,3 +30,31 @@ int print_number(int n)
 	print_char((num % 10) + '0');
 	return (count + 1);
 }
+/* betty style doc for function  print_binary goes there */
+/**
+ * print_binary - Entry point
+ * @n: First arg
+ * Return: int
+ */
+int print_binary(unsigned int n)
+{
+	int count = 0;
+	int binary[32];
+	int i = 0;
+
+	if (n == 0)
+	{
+		return (print_char('0'));
+	}
+	while (n > 0)
+	{
+		binary[i] = n % 2;
+		n = n / 2;
+		i++;
+	}
+	for (i = i - 1; i >= 0; i--)
+	{
+		count += print_char(binary[i] + '0');
+	}
+	return (count);
+}
