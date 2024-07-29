@@ -5,6 +5,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/* betty style doc for function  check_format0 goes there */
+/**
+ * check_format0 - Entry point
+ * @specifier: first arg
+ * @args: second arg
+ *
+ * Return: int
+ */
+int check_format0(char specifier, va_list args)
+{
+	int count = 0;
+
+	if (specifier == 'b')
+	{
+		count += print_binary(va_arg(args, int));
+	}
+	return (count);
+}
 /* betty style doc for function  check_format goes there */
 /**
  * check_format - Entry point
@@ -71,7 +89,14 @@ int _printf(const char *format, ...)
 			{
 				return (-1);
 			}
-			sum += check_format(format[i], args);
+			else if (format[i] == 'b')
+			{
+				sum += check_format0(format[i], args);
+			}
+			else
+			{
+				sum += check_format(format[i], args);
+			}
 		}
 		i++;
 	}
