@@ -11,4 +11,7 @@ int print_number(int num);
 int check_format0(char specifier, va_list args);
 int check_format(char specifier, va_list args);
 int print_binary(unsigned int n);
+int print_unsig(unsigned int n);
+int print_octal(unsigned int n);
+int print_hex(unsigned int n, int uppercase);
 #endif

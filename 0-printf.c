@@ -21,6 +21,22 @@ int check_format0(char specifier, va_list args)
 	{
 		count += print_binary(va_arg(args, int));
 	}
+	else if (specifier == 'u')
+	{
+		count += print_unsig(va_arg(args, unsigned int));
+	}
+	else if (specifier == 'o')
+	{
+		count += print_octal(va_arg(args, unsigned int));
+	}
+	else if (specifier == 'x')
+	{
+		count += print_hex(va_arg(args, unsigned int), 0);
+	}
+	else if (specifier == 'X')
+	{
+		count += print_hex(va_arg(args, unsigned int), 1);
+	}
 	return (count);
 }
 /* betty style doc for function  check_format goes there */
@@ -89,7 +105,11 @@ int _printf(const char *format, ...)
 			{
 				return (-1);
 			}
-			else if (format[i] == 'b')
+			else if (format[i] == 'b' || format[i] == 'u' || format[i] == 'o')
+			{
+				sum += check_format0(format[i], args);
+			}
+			else if (format[i] == 'x' || format[i] == 'X')
 			{
 				sum += check_format0(format[i], args);
 			}

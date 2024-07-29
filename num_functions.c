@@ -58,3 +58,59 @@ int print_binary(unsigned int n)
 	}
 	return (count);
 }
+/* betty style doc for function  print_unsig goes there */
+/**
+ * print_unsig - Prints an unsigned integer
+ * @n: The unsigned integer to print
+ * Return: Number of characters printed
+ */
+int print_unsig(unsigned int n)
+{
+	int count = 0;
+
+	if (n / 10)
+		count += print_unsig(n / 10);
+
+	count += print_char((n % 10) + '0');
+
+	return (count);
+}
+/* betty style doc for function  print_octal goes there */
+/**
+ * print_octal - Prints an unsigned integer in octal format
+ * @n: The unsigned integer to print
+ * Return: Number of characters printed
+ */
+int print_octal(unsigned int n)
+{
+	int count = 0;
+
+	if (n / 8)
+		count += print_octal(n / 8);
+
+	count += print_char((n % 8) + '0');
+
+	return (count);
+}
+/* betty style doc for function  print_hex goes there */
+/**
+ * print_hex - Prints an unsigned integer in hexadecimal format
+ * @n: The unsigned integer to print
+ * @uppercase: Flag to print in uppercase if true
+ * Return: Number of characters printed
+ */
+int print_hex(unsigned int n, int uppercase)
+{
+	int count = 0;
+	char hex_digits[] = "0123456789abcdef";
+
+	if (n / 16)
+		count += print_hex(n / 16, uppercase);
+
+	if (uppercase && hex_digits[n % 16] >= 'a' && hex_digits[n % 16] <= 'f')
+		count += print_char(hex_digits[n % 16] - 32);
+	else
+		count += print_char(hex_digits[n % 16]);
+
+	return (count);
+}
